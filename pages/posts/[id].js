@@ -5,7 +5,7 @@ import PostBody from '../../components/post-body'
 import Header from '../../components/header'
 import PostHeader from '../../components/post-header'
 import Layout from '../../components/layout'
-import { getPostById } from '../../lib/api'
+import { getPostById, getAllPosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
@@ -28,7 +28,6 @@ export default function Post({ post, morePosts, preview }) {
                 <title>
                   {post.title} | Next.js SSR Example with {CMS_NAME}
                 </title>
-                <meta property="og:image" content={post.ogImage.url} />
               </Head>
               <PostHeader
                 title={post.title}
@@ -53,4 +52,20 @@ export async function getStaticProps({ params }) {
       post: post
     },
   }
+}
+
+// export async function getStaticPaths({ params }) {
+//   const paths = [ `/posts/${params.id}` ];
+
+//   return { paths, fallback: false }
+// }
+
+export async function getStaticPaths() {
+  const allPosts = await getAllPosts();
+
+  const paths = allPosts.map((post) => ({
+    params: { id: post.id },
+  }));
+  
+  return { paths, fallback: false }
 }

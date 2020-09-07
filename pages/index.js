@@ -42,3 +42,4 @@ export async function getStaticProps() {
     props: { allPosts },
   }
 }
+
