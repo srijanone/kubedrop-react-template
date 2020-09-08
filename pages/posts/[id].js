@@ -44,7 +44,7 @@ export default function Post({ post, morePosts, preview }) {
   )
 }
 
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const post = await getPostById(params.id);
 
   return {
@@ -60,12 +60,12 @@ export async function getStaticProps({ params }) {
 //   return { paths, fallback: false }
 // }
 
-export async function getStaticPaths() {
-  const allPosts = await getAllPosts();
+// export async function getStaticPaths() {
+//   const allPosts = await getAllPosts();
 
-  const paths = allPosts.map((post) => ({
-    params: { id: post.id },
-  }));
+//   const paths = allPosts.map((post) => ({
+//     params: { id: post.id },
+//   }));
   
-  return { paths, fallback: false }
-}
+//   return { paths, fallback: false }
+// }
