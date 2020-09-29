@@ -1,7 +1,17 @@
-FROM node:14
-WORKDIR /usr/src/app
+FROM node:14.7.0-alpine
+
+WORKDIR /app
+
+ENV NODE_ENV production
+
 COPY package*.json ./
-RUN npm install
-COPY . .
+
+RUN npm ci 
+
+COPY . /app
+
+RUN npm install --only=dev && npm run build
+
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+
+CMD [ "npm", "start" ]
